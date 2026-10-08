@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="referrer" content="no-referrer">
+  <title>외국어 1000 퀴즈 (크메르어 · 스페인어 · 영어)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700;900&family=Outfit:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-light: #6366f1;
+      --gold: #f59e0b;
+      --success: #10b981;
+      --danger: #ef4444;
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --card-sub: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #475569;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Noto Sans KR', -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 12px;
+    }
+
+    .khmer-font { font-family: 'Kantumruy Pro', sans-serif; }
+    .latin-font { font-family: 'Outfit', 'Poppins', sans-serif; }
+
+    .container {
+      width: 100%;
+      max-width: 660px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* 언어 선택 상단 3단 스위처 */
+    .lang-switcher {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 5px;
+      border-radius: 14px;
+    }
+
+    .lang-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 9px 4px;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .lang-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary-light);
+      box-shadow: 0 4px 10px rgba(79, 70, 229, 0.35);
+    }
+
+    /* 헤더 */
+    header {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .app-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #fbbf24, #f59e0b, #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-pill {
+      background: var(--card-sub);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 5px 9px;
+      border-radius: 16px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-pill:active { transform: scale(0.96); }
+
+    /* 카테고리 탭 */
+    .tabs-row {
+      display: flex;
+      gap: 5px;
+      background: rgba(15, 23, 42, 0.6);
+      padding: 4px;
+      border-radius: 10px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 7px 2px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    /* 통계 게이지 */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+      background: rgba(15, 23, 42, 0.45);
+      padding: 8px 4px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .stat-label { font-size: 0.65rem; color: var(--text-muted); }
+    .stat-val { font-size: 0.88rem; font-weight: 700; color: #fff; }
+    .stat-val.gold { color: var(--gold); }
+    .stat-val.green { color: var(--success); }
+
+    .progress-container {
+      width: 100%;
+      height: 5px;
+      background: #334155;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #6366f1, #10b981);
+      transition: width 0.25s ease;
+    }
+
+    /* 퀴즈 카드 */
+    .quiz-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 22px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .category-badge {
+      background: rgba(99, 102, 241, 0.2);
+      color: #a5b4fc;
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      font-size: 0.74rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 12px;
+    }
+
+    .shortcut-hint {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .word-display {
+      text-align: center;
+      padding: 10px 4px;
+      background: radial-gradient(circle at center, rgba(99, 102, 241, 0.12) 0%, rgba(15, 23, 42, 0) 70%);
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .foreign-word {
+      font-size: 2.7rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #ffffff;
+      line-height: 1.25;
+      word-break: break-word;
+    }
+
+    .pronunciation-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid var(--border);
+      padding: 5px 14px;
+      border-radius: 20px;
+    }
+
+    .pron-text {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .btn-speak-main {
+      background: var(--primary);
+      border: none;
+      color: #fff;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    /* 4지 선다형 목록 */
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .option-btn {
+      background: var(--card-sub);
+      border: 2px solid var(--border);
+      color: var(--text);
+      border-radius: 13px;
+      padding: 12px 14px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .option-btn:hover:not(.locked) {
+      background: #475569;
+      border-color: var(--primary-light);
+    }
+
+    .option-main-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .option-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .option-num {
+      width: 25px;
+      height: 25px;
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .option-meaning {
+      font-size: 1.08rem;
+      font-weight: 600;
+      letter-spacing: -0.2px;
+    }
+
+    .option-status-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 6px;
+      display: none;
+    }
+
+    /* 정답 확인 시 4개 모든 선지의 원어 & 발음 & 개별 재생 버튼 노출 */
+    .option-revealed-area {
+      display: none;
+      padding-top: 8px;
+      margin-top: 4px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.15);
+      animation: fadeIn 0.25s ease;
+    }
+
+    .revealed-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .rev-word-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .rev-foreign {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .rev-pron {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .btn-opt-tts {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 0.72rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    /* 상태 색상 */
+    .option-btn.correct {
+      background: rgba(16, 185, 129, 0.2) !important;
+      border-color: var(--success) !important;
+    }
+    .option-btn.correct .option-num { background: var(--success); color: #fff; }
+    .option-btn.correct .option-status-badge { display: inline-block; background: var(--success); color: #fff; }
+
+    .option-btn.wrong-chosen {
+      background: rgba(239, 68, 68, 0.2) !important;
+      border-color: var(--danger) !important;
+    }
+    .option-btn.wrong-chosen .option-num { background: var(--danger); color: #fff; }
+    .option-btn.wrong-chosen .option-status-badge { display: inline-block; background: var(--danger); color: #fff; }
+
+    .option-btn.distractor { opacity: 0.88; }
+    .option-btn.locked { cursor: default; }
+
+    /* 피드백 바 */
+    .feedback-bar {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      padding: 12px;
+      border-radius: 14px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid var(--border);
+      animation: slideUp 0.25s ease;
+    }
+
+    .feedback-title {
+      font-size: 0.98rem;
+      font-weight: 700;
+    }
+
+    .btn-next-question {
+      width: 100%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      border: none;
+      color: #fff;
+      padding: 13px;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* 토스트 팝업 */
+    .toast-popup {
+      position: fixed;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid var(--gold);
+      color: #fff;
+      padding: 7px 16px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      z-index: 1000;
+      opacity: 0;
+      transition: all 0.25s ease;
+      pointer-events: none;
+    }
+
+    .toast-popup.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* 단어장 모달 */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      z-index: 900;
+    }
+
+    .modal-overlay.open { display: flex; }
+
+    .modal-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      width: 100%;
+      max-width: 580px;
+      max-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .modal-header {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title { font-size: 1rem; font-weight: 700; }
+    .modal-close { background: none; border: none; color: var(--text-muted); font-size: 1.4rem; cursor: pointer; }
+
+    .modal-body {
+      padding: 12px 14px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .vocab-search-input {
+      width: 100%;
+      background: var(--card-sub);
+      border: 1px solid var(--border);
+      padding: 8px 12px;
+      border-radius: 9px;
+      color: #fff;
+      font-size: 0.88rem;
+    }
+
+    .vocab-search-input:focus { outline: none; border-color: var(--primary-light); }
+    .vocab-list { display: flex; flex-direction: column; gap: 7px; }
+
+    .vocab-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(15, 23, 42, 0.5);
+      padding: 8px 12px;
+      border-radius: 9px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 480px) {
+      .foreign-word { font-size: 2.2rem; }
+      .pron-text { font-size: 1rem; }
+      .option-meaning { font-size: 0.98rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- 3개 국어 탭 스위처 -->
+    <div class="lang-switcher">
+      <button class="lang-btn active" id="btnLangKm" data-lang="km">
+        <span>🇰🇭</span> 크메르어
+      </button>
+      <button class="lang-btn" id="btnLangEs" data-lang="es">
+        <span>🇪🇸</span> 스페인어
+      </button>
+      <button class="lang-btn" id="btnLangEn" data-lang="en">
+        <span>🇺🇸</span> 영어
+      </button>
+    </div>
+
+    <!-- 헤더 -->
+    <header>
+      <div class="header-top">
+        <div class="logo-area">
+          <span id="currentLangFlag" style="font-size: 1.5rem;">🇰🇭</span>
+          <h1 class="app-title" id="appMainTitle">크메르어 1000 퀴즈</h1>
+        </div>
+        <div class="header-actions">
+          <button class="btn-pill" id="btnAudioMode" title="발음 재생 모드 변경">
+            <span id="audioModeIcon">🔊</span>
+            <span id="audioModeText">원어 발음</span>
+          </button>
+          <button class="btn-pill" id="btnTestSound">테스트</button>
+          <button class="btn-pill" id="btnOpenVocab">📖 사전</button>
+        </div>
+      </div>
+
+      <!-- 품사 및 오답 탭 -->
+      <div class="tabs-row">
+        <button class="tab-btn active" data-mode="all">전체 믹스</button>
+        <button class="tab-btn" data-mode="verb">동사 전용</button>
+        <button class="tab-btn" data-mode="adj">형용사 전용</button>
+        <button class="tab-btn" data-mode="wrong">오답 (<span id="wrongCount">0</span>)</button>
+      </div>
+
+      <!-- 통계 바 -->
+      <div class="stats-bar">
+        <div class="stat-item">
+          <span class="stat-label">진행도</span>
+          <span class="stat-val"><span id="statCurrent">1</span> / <span id="statTotal">1000</span></span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">정답/풀이</span>
+          <span class="stat-val green"><span id="statCorrect">0</span> / <span id="statSolved">0</span></span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">정답률</span>
+          <span class="stat-val" id="statRate">0%</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">연속 정답</span>
+          <span class="stat-val gold">🔥 <span id="statCombo">0</span></span>
+        </div>
+      </div>
+
+      <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </header>
+
+    <!-- 퀴즈 카드 -->
+    <main class="quiz-card">
+      <div class="card-meta">
+        <span class="category-badge" id="badgeCategory">동사 (Verb)</span>
+        <span class="shortcut-hint">단축키: 1 2 3 4 | Space</span>
+      </div>
+
+      <div class="word-display">
+        <div class="foreign-word khmer-font" id="displayWord">ញ៉ាំ</div>
+        <div class="pronunciation-box">
+          <span class="pron-text" id="displayPron">[냠]</span>
+          <button class="btn-speak-main" id="btnMainSpeak" title="발음 듣기">🔊</button>
+        </div>
+      </div>
+
+      <!-- 4지선다 컨테이너 -->
+      <div class="options-grid" id="optionsContainer"></div>
+
+      <!-- 결과 확인 및 다음 문제 버튼 바 -->
+      <div class="feedback-bar" id="feedbackBar">
+        <div class="feedback-title" id="feedbackTitle"></div>
+        <button class="btn-next-question" id="btnNext">
+          다음 문제로 이동 ➔ (Enter / Space)
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <!-- 전체 단어장 모달 -->
+  <div class="modal-overlay" id="vocabModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title" id="vocabModalTitle">📖 수록 어휘 사전</h3>
+        <button class="modal-close" id="btnCloseVocab">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="text" class="vocab-search-input" id="vocabSearch" placeholder="단어, 한글 발음, 뜻 검색...">
+        <div class="vocab-list" id="vocabList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 토스트 팝업 -->
+  <div class="toast-popup" id="toastPopup">
+    <span id="toastMsg">발음 재생 중...</span>
+  </div>
+
+  <script>
+    /* ==========================================================================
+       1. 언어별 원본 기본 어휘 데이터 (크메르어, 스페인어, 영어)
+       ========================================================================== */
+    const RAW_KHMER = [
+      { word: "ញ៉ាំ", pron: "냠", meaning: "먹다", type: "동사" },
+      { word: "ហូប", pron: "호웁", meaning: "먹다 (일반)", type: "동사" },
+      { word: "ផឹក", pron: "팍", meaning: "마시다", type: "동사" },
+      { word: "ទៅ", pron: "떠으", meaning: "가다", type: "동사" },
+      { word: "មក", pron: "모옥", meaning: "오다", type: "동사" },
+      { word: "ធ្វើ", pron: "트워", meaning: "하다 / 만들다", type: "동사" },
+      { word: "មើល", pron: "머얼", meaning: "보다 / 구경하다", type: "동사" },
+      { word: "ស្ដាប់", pron: "스답", meaning: "듣다", type: "동사" },
+      { word: "និយាយ", pron: "니이지이", meaning: "말하다", type: "동사" },
+      { word: "អាន", pron: "안", meaning: "읽다", type: "동사" },
+      { word: "សរសេរ", pron: "써쎄", meaning: "쓰다 / 필기하다", type: "동사" },
+      { word: "គេង", pron: "껭", meaning: "자다 / 잠들다", type: "동사" },
+      { word: "ភ្ញាក់", pron: "프냑", meaning: "깨어나다", type: "동사" },
+      { word: "ដើរ", pron: "다으", meaning: "걷다", type: "동사" },
+      { word: "រត់", pron: "로옷", meaning: "달리다", type: "동사" },
+      { word: "អង្គុយ", pron: "앙꼬이", meaning: "앉다", type: "동사" },
+      { word: "ឈរ", pron: "초오", meaning: "서다", type: "동사" },
+      { word: "ជួប", pron: "쭈웁", meaning: "만나다", type: "동사" },
+      { word: "ស្រឡាញ់", pron: "스라라안", meaning: "사랑하다", type: "동사" },
+      { word: "ចូលចិត្ត", pron: "쪼올쩟", meaning: "좋아하다", type: "동사" },
+      { word: "ស្អប់", pron: "스옵", meaning: "싫어하다", type: "동사" },
+      { word: "ដឹង", pron: "등", meaning: "알다 (지식)", type: "동사" },
+      { word: "ស្គាល់", pron: "스꼬알", meaning: "알다 (사람)", type: "동사" },
+      { word: "យល់", pron: "욜", meaning: "이해하다", type: "동사" },
+      { word: "ទិញ", pron: "띤", meaning: "사다", type: "동사" },
+      { word: "លក់", pron: "루억", meaning: "팔다", type: "동사" },
+      { word: "ឱ្យ", pron: "오이", meaning: "주다", type: "동사" },
+      { word: "យក", pron: "요옥", meaning: "가지다 / 취하다", type: "동사" },
+      { word: "រៀន", pron: "리언", meaning: "배우다 / 공부하다", type: "동사" },
+      { word: "បង្រៀន", pron: "방리언", meaning: "가르치다", type: "동사" },
+      { word: "ធ្វើការ", pron: "트워까", meaning: "일하다", type: "동사" },
+      { word: "សម្រាក", pron: "썸락", meaning: "쉬다 / 휴식하다", type: "동사" },
+      { word: "បើក", pron: "바억", meaning: "열다 / 운전하다", type: "동사" },
+      { word: "បិទ", pron: "벗", meaning: "닫다 / 끄다", type: "동사" },
+      { word: "ភ្លេច", pron: "플렛", meaning: "잊다", type: "동사" },
+      { word: "ចាំ", pron: "짬", meaning: "기억하다 / 기다리다", type: "동사" },
+      { word: "ជួយ", pron: "쭈오이", meaning: "돕다", type: "동사" },
+      { word: "សួរ", pron: "쑤어", meaning: "묻다", type: "동사" },
+      { word: "ឆ្លើយ", pron: "츨라어이", meaning: "대답하다", type: "동사" },
+      { word: "គិត", pron: "끗", meaning: "생각하다", type: "동사" },
+      { word: "សើច", pron: "싸엇", meaning: "웃다", type: "동사" },
+      { word: "យំ", pron: "윰", meaning: "울다", type: "동사" },
+      { word: "ឈប់", pron: "촛", meaning: "멈추다", type: "동사" },
+      { word: "ចាប់ផ្តើម", pron: "짭프다엄", meaning: "시작하다", type: "동사" },
+      { word: "បញ្ចប់", pron: "반짭", meaning: "끝내다", type: "동사" },
+      { word: "ចម្អិន", pron: "쩜언", meaning: "요리하다", type: "동사" },
+      { word: "សម្អាត", pron: "썸앗", meaning: "청소하다", type: "동사" },
+      { word: "ផ្ញើ", pron: "프냐어", meaning: "보내다", type: "동사" },
+      { word: "ទទួល", pron: "떠뚜얼", meaning: "받다", type: "동사" },
+      { word: "រក", pron: "러옥", meaning: "찾다", type: "동사" },
+      // 형용사
+      { word: "ធំ", pron: "톰", meaning: "크다", type: "형용사" },
+      { word: "តូច", pron: "또오이", meaning: "작다", type: "형용사" },
+      { word: "ខ្ពស់", pron: "크뿌어", meaning: "높다 / 키가 크다", type: "형용사" },
+      { word: "ទាប", pron: "티어프", meaning: "낮다 / 키가 작다", type: "형용사" },
+      { word: "វែង", pron: "왜앙", meaning: "길다", type: "형용사" },
+      { word: "ខ្លី", pron: "클라이", meaning: "짧다", type: "형용사" },
+      { word: "ធាត់", pron: "토앗", meaning: "뚱뚱하다", type: "형용사" },
+      { word: "ស្គម", pron: "스꼼", meaning: "마르다 / 날씬하다", type: "형용사" },
+      { word: "ស្អាត", pron: "스앗", meaning: "예쁘다 / 깨끗하다", type: "형용사" },
+      { word: "អាក្រក់", pron: "아끄럭", meaning: "나쁘다 / 못생기다", type: "형용사" },
+      { word: "ល្អ", pron: "러어", meaning: "좋다", type: "형용사" },
+      { word: "ចាស់", pron: "짜아", meaning: "늙다 / 오래되다", type: "형용사" },
+      { word: "ក្មេង", pron: "크멩", meaning: "젊다 / 어리다", type: "형용사" },
+      { word: "ថ្មី", pron: "트머이", meaning: "새롭다", type: "형용사" },
+      { word: "ច្រើន", pron: "찌라언", meaning: "많다", type: "형용사" },
+      { word: "តិច", pron: "땍", meaning: "적다", type: "형용사" },
+      { word: "ក្តៅ", pron: "끄다오", meaning: "덥다 / 뜨겁다", type: "형용사" },
+      { word: "ត្រជាក់", pron: "뜨러찌억", meaning: "춥다 / 차갑다", type: "형용사" },
+      { word: "ឆ្ងាញ់", pron: "츠안", meaning: "맛있다", type: "형용사" },
+      { word: "ថ្លៃ", pron: "틀라이", meaning: "비싸다", type: "형용사" },
+      { word: "ថោក", pron: "타옥", meaning: "싸다 / 저렴하다", type: "형용사" },
+      { word: "ឆ្ងាយ", pron: "츠응아이", meaning: "멀다", type: "형용사" },
+      { word: "ជិត", pron: "찟", meaning: "가깝다", type: "형용사" },
+      { word: "លឿន", pron: "르언", meaning: "빠르다", type: "형용사" },
+      { word: "យឺត", pron: "이엇", meaning: "느리다", type: "형용사" },
+      { word: "ងាយ", pron: "응이어이", meaning: "쉽다", type: "형용사" },
+      { word: "ពិបាក", pron: "피바악", meaning: "어렵다", type: "형용사" },
+      { word: "ធ្ងន់", pron: "트응온", meaning: "무겁다", type: "형용사" },
+      { word: "ស្រាល", pron: "스라알", meaning: "가볍다", type: "형용사" },
+      { word: "ខ្លាំង", pron: "클랑", meaning: "강하다 / 세다", type: "형용사" },
+      { word: "ខ្សោយ", pron: "크싸오이", meaning: "약하다", type: "형용사" },
+      { word: "ឆ្លាត", pron: "츠랃", meaning: "똑똑하다", type: "형용사" },
+      { word: "ផ្អែម", pron: "프아엠", meaning: "달다", type: "형용사" },
+      { word: "ហឹរ", pron: "허", meaning: "맵다", type: "형용사" },
+      { word: "ប្រៃ", pron: "프라이", meaning: "짜다", type: "형용사" },
+      { word: "សប្បាយ", pron: "싸바이", meaning: "즐겁다 / 기쁘다", type: "형용사" },
+      { word: "រវល់", pron: "러월", meaning: "바쁘다", type: "형용사" },
+      { word: "ទំនេរ", pron: "뚬네", meaning: "한가하다", type: "형용사" },
+      { word: "ស្ងប់ស្ងាត់", pron: "스응옵스응앗", meaning: "조용하다", type: "형용사" },
+      { word: "សំខាន់", pron: "쌈칸", meaning: "중요하다", type: "형용사" },
+      { word: "គ្រោះថ្នាក់", pron: "끄루어트낙", meaning: "위험하다", type: "형용사" },
+      { word: "សុវត្ថិភាព", pron: "쏘왓티피읍", meaning: "안전하다", type: "형용사" },
+      { word: "ហត់", pron: "혿", meaning: "피곤하다", type: "형용사" },
+      { word: "ឈឺ", pron: "츠", meaning: "아프다", type: "형용사" }
+    ];
+
+    const RAW_SPANISH = [
+      { word: "comer", pron: "꼬메르", meaning: "먹다", type: "동사" },
+      { word: "beber", pron: "베베르", meaning: "마시다", type: "동사" },
+      { word: "ir", pron: "이르", meaning: "가다", type: "동사" },
+      { word: "venir", pron: "베니르", meaning: "오다", type: "동사" },
+      { word: "hacer", pron: "아쎄르", meaning: "하다 / 만들다", type: "동사" },
+      { word: "ver", pron: "베르", meaning: "보다", type: "동사" },
+      { word: "mirar", pron: "미라르", meaning: "바라보다", type: "동사" },
+      { word: "escuchar", pron: "에스꾸차르", meaning: "듣다", type: "동사" },
+      { word: "hablar", pron: "아블라르", meaning: "말하다", type: "동사" },
+      { word: "leer", pron: "레에르", meaning: "읽다", type: "동사" },
+      { word: "escribir", pron: "에스끄리비르", meaning: "쓰다", type: "동사" },
+      { word: "dormir", pron: "도르미르", meaning: "자다", type: "동사" },
+      { word: "caminar", pron: "까미나르", meaning: "걷다", type: "동사" },
+      { word: "correr", pron: "꼬레르", meaning: "달리다", type: "동사" },
+      { word: "sentarse", pron: "쎈따르쎄", meaning: "앉다", type: "동사" },
+      { word: "levantarse", pron: "레반따르쎄", meaning: "일어서다", type: "동사" },
+      { word: "conocer", pron: "꼬노쎄르", meaning: "알다 (사람)", type: "동사" },
+      { word: "saber", pron: "싸베르", meaning: "알다 (지식)", type: "동사" },
+      { word: "entender", pron: "엔뗀데르", meaning: "이해하다", type: "동사" },
+      { word: "amar", pron: "아마르", meaning: "사랑하다", type: "동사" },
+      { word: "gustar", pron: "구스따르", meaning: "좋아하다", type: "동사" },
+      { word: "odiar", pron: "오디아르", meaning: "싫어하다", type: "동사" },
+      { word: "comprar", pron: "꼼쁘라르", meaning: "사다", type: "동사" },
+      { word: "vender", pron: "벤데르", meaning: "팔다", type: "동사" },
+      { word: "dar", pron: "다르", meaning: "주다", type: "동사" },
+      { word: "recibir", pron: "레씨비르", meaning: "받다", type: "동사" },
+      { word: "aprender", pron: "아쁘렌데르", meaning: "배우다", type: "동사" },
+      { word: "enseñar", pron: "엔쎄냐르", meaning: "가르치다", type: "동사" },
+      { word: "trabajar", pron: "뜨라바하르", meaning: "일하다", type: "동사" },
+      { word: "descansar", pron: "데스깐싸르", meaning: "쉬다", type: "동사" },
+      { word: "abrir", pron: "아브리르", meaning: "열다", type: "동사" },
+      { word: "cerrar", pron: "쎄라르", meaning: "닫다", type: "동사" },
+      { word: "olvidar", pron: "올비다르", meaning: "잊다", type: "동사" },
+      { word: "recordar", pron: "레꼬르다르", meaning: "기억하다", type: "동사" },
+      { word: "ayudar", pron: "아유다르", meaning: "돕다", type: "동사" },
+      { word: "preguntar", pron: "쁘레군따르", meaning: "묻다", type: "동사" },
+      { word: "responder", pron: "레스뽄데르", meaning: "대답하다", type: "동사" },
+      { word: "pensar", pron: "뻰싸르", meaning: "생각하다", type: "동사" },
+      { word: "reír", pron: "레이르", meaning: "웃다", type: "동사" },
+      { word: "llorar", pron: "요라르", meaning: "울다", type: "동사" },
+      { word: "parar", pron: "빠라르", meaning: "멈추다", type: "동사" },
+      { word: "empezar", pron: "엠뻬싸르", meaning: "시작하다", type: "동사" },
+      { word: "terminar", pron: "떼르미나르", meaning: "끝내다", type: "동사" },
+      { word: "cocinar", pron: "꼬씨나르", meaning: "요리하다", type: "동사" },
+      { word: "limpiar", pron: "림삐아르", meaning: "청소하다", type: "동사" },
+      { word: "enviar", pron: "엔비아르", meaning: "보내다", type: "동사" },
+      { word: "buscar", pron: "부스까르", meaning: "찾다", type: "동사" },
+      { word: "encontrar", pron: "엔꼰뜨라르", meaning: "발견하다", type: "동사" },
+      { word: "viajar", pron: "비아하르", meaning: "여행하다", type: "동사" },
+      { word: "conducir", pron: "꼰두씨르", meaning: "운전하다", type: "동사" },
+      // 형용사
+      { word: "grande", pron: "그란데", meaning: "크다", type: "형용사" },
+      { word: "pequeño", pron: "뻬께뇨", meaning: "작다", type: "형용사" },
+      { word: "alto", pron: "알또", meaning: "높다 / 키가 크다", type: "형용사" },
+      { word: "bajo", pron: "바호", meaning: "낮다 / 키가 작다", type: "형용사" },
+      { word: "largo", pron: "라르고", meaning: "길다", type: "형용사" },
+      { word: "corto", pron: "꼬르또", meaning: "짧다", type: "형용사" },
+      { word: "gordo", pron: "고르도", meaning: "뚱뚱하다", type: "형용사" },
+      { word: "delgado", pron: "델가도", meaning: "날씬하다 / 마르다", type: "형용사" },
+      { word: "bonito", pron: "보니또", meaning: "예쁘다", type: "형용사" },
+      { word: "feo", pron: "페오", meaning: "못생기다", type: "형용사" },
+      { word: "bueno", pron: "부에노", meaning: "좋다 / 착하다", type: "형용사" },
+      { word: "malo", pron: "말로", meaning: "나쁘다", type: "형용사" },
+      { word: "viejo", pron: "비에호", meaning: "늙다 / 오래되다", type: "형용사" },
+      { word: "joven", pron: "호벤", meaning: "젊다 / 어리다", type: "형용사" },
+      { word: "nuevo", pron: "누에보", meaning: "새롭다", type: "형용사" },
+      { word: "mucho", pron: "무초", meaning: "많다", type: "형용사" },
+      { word: "poco", pron: "뽀꼬", meaning: "적다", type: "형용사" },
+      { word: "caliente", pron: "깔리엔떼", meaning: "뜨겁다 / 덥다", type: "형용사" },
+      { word: "frío", pron: "프리오", meaning: "차갑다 / 춥다", type: "형용사" },
+      { word: "rico", pron: "리꼬", meaning: "맛있다 / 부유하다", type: "형용사" },
+      { word: "caro", pron: "까로", meaning: "비싸다", type: "형용사" },
+      { word: "barato", pron: "바라또", meaning: "싸다", type: "형용사" },
+      { word: "lejos", pron: "레호스", meaning: "멀다", type: "형용사" },
+      { word: "cerca", pron: "쎄르까", meaning: "가깝다", type: "형용사" },
+      { word: "rápido", pron: "라삐도", meaning: "빠르다", type: "형용사" },
+      { word: "lento", pron: "렌또", meaning: "느리다", type: "형용사" },
+      { word: "fácil", pron: "파씰", meaning: "쉽다", type: "형용사" },
+      { word: "difícil", pron: "디피씰", meaning: "어렵다", type: "형용사" },
+      { word: "pesado", pron: "뻬싸도", meaning: "무겁다", type: "형용사" },
+      { word: "ligero", pron: "리헤로", meaning: "가볍다", type: "형용사" },
+      { word: "fuerte", pron: "푸에르떼", meaning: "강하다 / 세다", type: "형용사" },
+      { word: "débil", pron: "데빌", meaning: "약하다", type: "형용사" },
+      { word: "inteligente", pron: "인뗄리헨떼", meaning: "똑똑하다", type: "형용사" },
+      { word: "dulce", pron: "둘쎄", meaning: "달다", type: "형용사" },
+      { word: "picante", pron: "삐깐떼", meaning: "맵다", type: "형용사" },
+      { word: "salado", pron: "쌀라도", meaning: "짜다", type: "형용사" },
+      { word: "feliz", pron: "펠리스", meaning: "행복하다", type: "형용사" },
+      { word: "triste", pron: "뜨리스떼", meaning: "슬프다", type: "형용사" },
+      { word: "ocupado", pron: "오꾸빠도", meaning: "바쁘다", type: "형용사" },
+      { word: "tranquilo", pron: "뜨랑낄로", meaning: "조용하다 / 평온하다", type: "형용사" },
+      { word: "limpio", pron: "림삐오", meaning: "깨끗하다", type: "형용사" },
+      { word: "sucio", pron: "쑤씨오", meaning: "더럽다", type: "형용사" },
+      { word: "cansado", pron: "깐싸도", meaning: "피곤하다", type: "형용사" },
+      { word: "enfermo", pron: "엔페르모", meaning: "아프다 / 병들다", type: "형용사" }
+    ];
+
+    const RAW_ENGLISH = [
+      { word: "eat", pron: "잇", meaning: "먹다", type: "동사" },
+      { word: "drink", pron: "드링크", meaning: "마시다", type: "동사" },
+      { word: "go", pron: "고우", meaning: "가다", type: "동사" },
+      { word: "come", pron: "컴", meaning: "오다", type: "동사" },
+      { word: "make", pron: "메이크", meaning: "만들다 / 하다", type: "동사" },
+      { word: "see", pron: "씨", meaning: "보다 / 목격하다", type: "동사" },
+      { word: "look", pron: "룩", meaning: "바라보다 / 쳐다보다", type: "동사" },
+      { word: "listen", pron: "리스튼", meaning: "듣다 / 경청하다", type: "동사" },
+      { word: "speak", pron: "스픽", meaning: "말하다 / 이야기하다", type: "동사" },
+      { word: "read", pron: "리드", meaning: "읽다", type: "동사" },
+      { word: "write", pron: "라이트", meaning: "쓰다 / 작성하다", type: "동사" },
+      { word: "sleep", pron: "슬립", meaning: "자다 / 잠들다", type: "동사" },
+      { word: "walk", pron: "워크", meaning: "걷다 / 산책하다", type: "동사" },
+      { word: "run", pron: "런", meaning: "달리다 / 뛰다", type: "동사" },
+      { word: "sit", pron: "싯", meaning: "앉다", type: "동사" },
+      { word: "stand", pron: "스탠드", meaning: "일어서다 / 서다", type: "동사" },
+      { word: "meet", pron: "밋", meaning: "만나다", type: "동사" },
+      { word: "love", pron: "러브", meaning: "사랑하다", type: "동사" },
+      { word: "like", pron: "라이크", meaning: "좋아하다", type: "동사" },
+      { word: "hate", pron: "헤이트", meaning: "싫어하다 / 증오하다", type: "동사" },
+      { word: "know", pron: "노우", meaning: "알다", type: "동사" },
+      { word: "understand", pron: "언더스탠드", meaning: "이해하다", type: "동사" },
+      { word: "buy", pron: "바이", meaning: "사다 / 구매하다", type: "동사" },
+      { word: "sell", pron: "셀", meaning: "팔다 / 판매하다", type: "동사" },
+      { word: "give", pron: "기브", meaning: "주다 / 건네다", type: "동사" },
+      { word: "take", pron: "테이크", meaning: "가지다 / 가져가다", type: "동사" },
+      { word: "learn", pron: "런", meaning: "배우다 / 습득하다", type: "동사" },
+      { word: "teach", pron: "티치", meaning: "가르치다", type: "동사" },
+      { word: "work", pron: "워크", meaning: "일하다 / 근무하다", type: "동사" },
+      { word: "rest", pron: "레스트", meaning: "쉬다 / 휴식하다", type: "동사" },
+      { word: "open", pron: "오픈", meaning: "열다", type: "동사" },
+      { word: "close", pron: "클로즈", meaning: "닫다", type: "동사" },
+      { word: "forget", pron: "포겟", meaning: "잊다 / 까먹다", type: "동사" },
+      { word: "remember", pron: "리멤버", meaning: "기억하다", type: "동사" },
+      { word: "help", pron: "헬프", meaning: "돕다 / 도와주다", type: "동사" },
+      { word: "ask", pron: "애스크", meaning: "묻다 / 질문하다", type: "동사" },
+      { word: "answer", pron: "앤서", meaning: "대답하다 / 응답하다", type: "동사" },
+      { word: "think", pron: "씽크", meaning: "생각하다", type: "동사" },
+      { word: "laugh", pron: "래프", meaning: "웃다", type: "동사" },
+      { word: "cry", pron: "크라이", meaning: "울다", type: "동사" },
+      { word: "stop", pron: "스탑", meaning: "멈추다 / 그만두다", type: "동사" },
+      { word: "start", pron: "스타트", meaning: "시작하다", type: "동사" },
+      { word: "finish", pron: "피니시", meaning: "끝내다 / 마치다", type: "동사" },
+      { word: "cook", pron: "쿡", meaning: "요리하다", type: "동사" },
+      { word: "clean", pron: "클린", meaning: "청소하다 / 닦다", type: "동사" },
+      { word: "send", pron: "샌드", meaning: "보내다 / 발송하다", type: "동사" },
+      { word: "find", pron: "파인드", meaning: "찾다 / 발견하다", type: "동사" },
+      { word: "lose", pron: "루즈", meaning: "잃다 / 분실하다", type: "동사" },
+      { word: "win", pron: "윈", meaning: "이기다 / 승리하다", type: "동사" },
+      { word: "drive", pron: "드라이브", meaning: "운전하다", type: "동사" },
+      // 형용사
+      { word: "big", pron: "빅", meaning: "크다", type: "형용사" },
+      { word: "small", pron: "스몰", meaning: "작다", type: "형용사" },
+      { word: "tall", pron: "톨", meaning: "키가 크다 / 높다", type: "형용사" },
+      { word: "short", pron: "쇼트", meaning: "짧다 / 키가 작다", type: "형용사" },
+      { word: "long", pron: "롱", meaning: "길다", type: "형용사" },
+      { word: "fat", pron: "팻", meaning: "뚱뚱하다 / 살찌다", type: "형용사" },
+      { word: "thin", pron: "씬", meaning: "마르다 / 얇다", type: "형용사" },
+      { word: "pretty", pron: "프리티", meaning: "예쁘다 / 귀엽다", type: "형용사" },
+      { word: "ugly", pron: "어글리", meaning: "못생기다", type: "형용사" },
+      { word: "good", pron: "굿", meaning: "좋다 / 훌륭하다", type: "형용사" },
+      { word: "bad", pron: "배드", meaning: "나쁘다", type: "형용사" },
+      { word: "old", pron: "올드", meaning: "늙다 / 낡다", type: "형용사" },
+      { word: "young", pron: "영", meaning: "젊다 / 어리다", type: "형용사" },
+      { word: "new", pron: "뉴", meaning: "새롭다", type: "형용사" },
+      { word: "many", pron: "매니", meaning: "많다 (셀 수 있는)", type: "형용사" },
+      { word: "little", pron: "리틀", meaning: "적다 / 어린", type: "형용사" },
+      { word: "hot", pron: "핫", meaning: "뜨겁다 / 덥다", type: "형용사" },
+      { word: "cold", pron: "콜드", meaning: "차갑다 / 춥다", type: "형용사" },
+      { word: "delicious", pron: "딜리셔스", meaning: "맛있다", type: "형용사" },
+      { word: "expensive", pron: "익스펜시브", meaning: "비싸다", type: "형용사" },
+      { word: "cheap", pron: "칩", meaning: "싸다 / 저렴하다", type: "형용사" },
+      { word: "far", pron: "파", meaning: "멀다", type: "형용사" },
+      { word: "near", pron: "니어", meaning: "가깝다", type: "형용사" },
+      { word: "fast", pron: "패스트", meaning: "빠르다", type: "형용사" },
+      { word: "slow", pron: "슬로우", meaning: "느리다", type: "형용사" },
+      { word: "easy", pron: "이지", meaning: "쉽다", type: "형용사" },
+      { word: "difficult", pron: "디피컬트", meaning: "어렵다", type: "형용사" },
+      { word: "heavy", pron: "헤비", meaning: "무겁다", type: "형용사" },
+      { word: "light", pron: "라이트", meaning: "가볍다", type: "형용사" },
+      { word: "strong", pron: "스트롱", meaning: "강하다 / 세다", type: "형용사" },
+      { word: "weak", pron: "위크", meaning: "약하다", type: "형용사" },
+      { word: "smart", pron: "스마트", meaning: "똑똑하다", type: "형용사" },
+      { word: "sweet", pron: "스윗", meaning: "달다", type: "형용사" },
+      { word: "spicy", pron: "스파이시", meaning: "맵다", type: "형용사" },
+      { word: "salty", pron: "솔티", meaning: "짜다", type: "형용사" },
+      { word: "happy", pron: "해피", meaning: "행복하다 / 기쁘다", type: "형용사" },
+      { word: "sad", pron: "새드", meaning: "슬프다", type: "형용사" },
+      { word: "busy", pron: "비지", meaning: "바쁘다", type: "형용사" },
+      { word: "quiet", pron: "콰이어트", meaning: "조용하다", type: "형용사" },
+      { word: "clean", pron: "클린", meaning: "깨끗하다", type: "형용사" },
+      { word: "dirty", pron: "더티", meaning: "더럽다", type: "형용사" },
+      { word: "tired", pron: "타이어드", meaning: "피곤하다", type: "형용사" },
+      { word: "sick", pron: "식", meaning: "아프다 / 병든", type: "형용사" }
+    ];
+
+    /* ==========================================================================
+       2. 라운드 로빈(균등 분배) 1,000단어 확장 생성기
+       ========================================================================== */
+    function buildBalanced1000Bank(rawArray, langKey) {
+      const bank = [];
+      rawArray.forEach(item => {
+        bank.push({ word: item.word, pron: item.pron, meaning: item.meaning, type: item.type });
+      });
+
+      let idx = 0;
+      let seed = 0;
+
+      if (langKey === 'km') {
+        const kmVerbMods = [
+          { prefix: "ចង់", pron: "쩡 ", koSuffix: "하고 싶다" },
+          { prefix: "មិន", pron: "먼 ", koPrefix: "안 " },
+          { prefix: "កំពុង", pron: "껌뽕 ", koSuffix: "하는 중이다" },
+          { prefix: "ធ្លាប់", pron: "틀로압 ", koSuffix: "해본 적 있다" }
+        ];
+        const kmAdjMods = [
+          { suffix: "ណាស់", pron: " 나아", koPrefix: "매우 " },
+          { suffix: "ពេក", pron: " 뻭", koPrefix: "너무 " },
+          { suffix: "បន្តិច", pron: " 번땍", koPrefix: "약간 " }
+        ];
+
+        while (bank.length < 1000) {
+          const base = rawArray[idx % rawArray.length];
+          let w, pr, m;
+
+          if (base.type === "동사") {
+            const mod = kmVerbMods[seed % kmVerbMods.length];
+            w = mod.prefix + base.word;
+            pr = mod.pron + base.pron;
+            m = mod.koPrefix ? mod.koPrefix + base.meaning : base.meaning.replace("하다", mod.koSuffix).replace("다", mod.koSuffix.replace("하", ""));
+          } else {
+            const mod = kmAdjMods[seed % kmAdjMods.length];
+            w = base.word + mod.suffix;
+            pr = base.pron + mod.pron;
+            m = mod.koPrefix + base.meaning;
+          }
+          bank.push({ word: w, pron: pr, meaning: m, type: base.type });
+          idx++;
+          seed++;
+        }
+      } else if (langKey === 'es') {
+        // ★ 스페인어: bastante 편중을 완전히 고친 다채로운 수식어 순환군
+        const esVerbMods = [
+          { prefix: "querer ", pron: "께레르 ", koSuffix: "하고 싶다" },
+          { prefix: "poder ", pron: "뽀데르 ", koSuffix: "할 수 있다" },
+          { prefix: "no ", pron: "노 ", koPrefix: "안 " },
+          { prefix: "deber ", pron: "데베르 ", koSuffix: "해야 한다" },
+          { prefix: "necesitar ", pron: "네쎄씨따르 ", koSuffix: "할 필요가 있다" },
+          { prefix: "empezar a ", pron: "엠뻬싸르 아 ", koSuffix: "하기 시작하다" }
+        ];
+        const esAdjMods = [
+          { prefix: "muy ", pron: "무이 ", koPrefix: "매우 " },
+          { prefix: "bastante ", pron: "바스딴떼 ", koPrefix: "꽤/상당히 " },
+          { prefix: "demasiado ", pron: "데마씨아도 ", koPrefix: "너무 " },
+          { prefix: "un poco ", pron: "운 뽀꼬 ", koPrefix: "약간 " },
+          { prefix: "realmente ", pron: "레알멘떼 ", koPrefix: "정말 " },
+          { prefix: "tan ", pron: "딴 ", koPrefix: "그토록 " }
+        ];
+
+        while (bank.length < 1000) {
+          const base = rawArray[idx % rawArray.length];
+          let w, pr, m;
+
+          if (base.type === "동사") {
+            const mod = esVerbMods[seed % esVerbMods.length];
+            w = mod.prefix + base.word;
+            pr = mod.pron + base.pron;
+            m = mod.koPrefix ? mod.koPrefix + base.meaning : base.meaning.replace("하다", mod.koSuffix).replace("다", mod.koSuffix.replace("하", ""));
+          } else {
+            const mod = esAdjMods[seed % esAdjMods.length];
+            w = mod.prefix + base.word;
+            pr = mod.pron + base.pron;
+            m = mod.koPrefix + base.meaning;
+          }
+          bank.push({ word: w, pron: pr, meaning: m, type: base.type });
+          idx++;
+          seed++;
+        }
+      } else if (langKey === 'en') {
+        // 영어 수식어 및 조동사 순환군
+        const enVerbMods = [
+          { prefix: "want to ", pron: "원트 투 ", koSuffix: "하고 싶다" },
+          { prefix: "can ", pron: "캔 ", koSuffix: "할 수 있다" },
+          { prefix: "don't ", pron: "돈트 ", koPrefix: "안 " },
+          { prefix: "must ", pron: "머스트 ", koSuffix: "해야만 한다" },
+          { prefix: "need to ", pron: "니드 투 ", koSuffix: "할 필요가 있다" },
+          { prefix: "start to ", pron: "스타트 투 ", koSuffix: "하기 시작하다" }
+        ];
+        const enAdjMods = [
+          { prefix: "very ", pron: "베리 ", koPrefix: "매우 " },
+          { prefix: "too ", pron: "투 ", koPrefix: "너무 " },
+          { prefix: "quite ", pron: "콰이트 ", koPrefix: "꽤/상당히 " },
+          { prefix: "a little ", pron: "어 리틀 ", koPrefix: "약간 " },
+          { prefix: "really ", pron: "리얼리 ", koPrefix: "진짜 " },
+          { prefix: "so ", pron: "쏘 ", koPrefix: "정말 " }
+        ];
+
+        while (bank.length < 1000) {
+          const base = rawArray[idx % rawArray.length];
+          let w, pr, m;
+
+          if (base.type === "동사") {
+            const mod = enVerbMods[seed % enVerbMods.length];
+            w = mod.prefix + base.word;
+            pr = mod.pron + base.pron;
+            m = mod.koPrefix ? mod.koPrefix + base.meaning : base.meaning.replace("하다", mod.koSuffix).replace("다", mod.koSuffix.replace("하", ""));
+          } else {
+            const mod = enAdjMods[seed % enAdjMods.length];
+            w = mod.prefix + base.word;
+            pr = mod.pron + base.pron;
+            m = mod.koPrefix + base.meaning;
+          }
+          bank.push({ word: w, pron: pr, meaning: m, type: base.type });
+          idx++;
+          seed++;
+        }
+      }
+
+      return bank;
+    }
+
+    const DB = {
+      km: {
+        raw: RAW_KHMER,
+        bank: buildBalanced1000Bank(RAW_KHMER, 'km'),
+        fontClass: 'khmer-font',
+        title: '크메르어 1000 퀴즈',
+        flag: '🇰🇭',
+        ttsLang: 'km'
+      },
+      es: {
+        raw: RAW_SPANISH,
+        bank: buildBalanced1000Bank(RAW_SPANISH, 'es'),
+        fontClass: 'latin-font',
+        title: '스페인어 1000 퀴즈',
+        flag: '🇪🇸',
+        ttsLang: 'es-ES'
+      },
+      en: {
+        raw: RAW_ENGLISH,
+        bank: buildBalanced1000Bank(RAW_ENGLISH, 'en'),
+        fontClass: 'latin-font',
+        title: '영어 1000 퀴즈',
+        flag: '🇺🇸',
+        ttsLang: 'en-US'
+      }
+    };
+
+    /* ==========================================================================
+       3. 하이브리드 음성 엔진 (Web Speech + Google TTS + 한글 독음 폴백)
+       ========================================================================== */
+    let currentLang = 'km';
+    let audioMode = 'native'; // 'native', 'korean', 'both'
+    let activeAudio = null;
+
+    function showToast(text) {
+      const toast = document.getElementById('toastPopup');
+      document.getElementById('toastMsg').textContent = text;
+      toast.classList.add('show');
+      clearTimeout(toast.timer);
+      toast.timer = setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+
+    function playNativeTTS(text, lang) {
+      return new Promise((resolve, reject) => {
+        // 기기 내장 음성 (영어/스페인어/크메르어 지원 기기)
+        if ('speechSynthesis' in window) {
+          const voices = window.speechSynthesis.getVoices();
+          const hasVoice = voices.some(v => v.lang.startsWith(lang.substring(0, 2)));
+          if (hasVoice || lang.startsWith('es') || lang.startsWith('en')) {
+            window.speechSynthesis.cancel();
+            const u = new SpeechSynthesisUtterance(text);
+            u.lang = lang;
+            u.rate = 0.9;
+            u.onend = () => resolve();
+            u.onerror = (e) => reject(e);
+            window.speechSynthesis.speak(u);
+            return;
+          }
+        }
+
+        // Google Translate TTS 스트리밍 폴백 (크메르어 보장)
+        if (activeAudio) {
+          activeAudio.pause();
+          activeAudio = null;
+        }
+        const tl = lang.substring(0, 2);
+        const url = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=${tl}&q=${encodeURIComponent(text)}`;
+        const audio = new Audio(url);
+        activeAudio = audio;
+
+        const timer = setTimeout(() => {
+          audio.pause();
+          reject(new Error("Timeout"));
+        }, 3200);
+
+        audio.onplay = () => clearTimeout(timer);
+        audio.onended = () => resolve();
+        audio.onerror = (err) => { clearTimeout(timer); reject(err); };
+        audio.play().catch(err => { clearTimeout(timer); reject(err); });
+      });
+    }
+
+    function playKoreanSpeech(pron) {
+      return new Promise((resolve) => {
+        if (!('speechSynthesis' in window)) return resolve();
+        window.speechSynthesis.cancel();
+        const clean = pron.replace(/[\[\]\(\)\/]/g, ' ').trim();
+        const u = new SpeechSynthesisUtterance(clean);
+        u.lang = 'ko-KR';
+        u.rate = 0.95;
+        u.onend = () => resolve();
+        u.onerror = () => resolve();
+        window.speechSynthesis.speak(u);
+      });
+    }
+
+    async function playSmartSound(word, pron) {
+      showToast(`🔊 [${word} : ${pron}]`);
+
+      if (audioMode === 'korean') {
+        await playKoreanSpeech(pron);
+        return;
+      }
+
+      const langCode = DB[currentLang].ttsLang;
+
+      if (audioMode === 'both') {
+        try {
+          await playNativeTTS(word, langCode);
+        } catch (e) {}
+        await new Promise(r => setTimeout(r, 200));
+        await playKoreanSpeech(pron);
+        return;
+      }
+
+      try {
+        await playNativeTTS(word, langCode);
+      } catch (err) {
+        showToast(`🗣️ 한글 독음 재생: [${pron}]`);
+        await playKoreanSpeech(pron);
+      }
+    }
+
+    /* ==========================================================================
+       4. 퀴즈 게임 엔진 & 오답 관리
+       ========================================================================== */
+    let currentMode = 'all';
+    let questionPool = [];
+    let currentIndex = 0;
+    let currentQuestion = null;
+    let isAnswered = false;
+
+    let solvedCount = 0;
+    let correctCount = 0;
+    let comboCount = 0;
+    let wrongDict = { km: [], es: [], en: [] };
+
+    function loadSavedWrongs() {
+      try {
+        ['km', 'es', 'en'].forEach(l => {
+          const s = localStorage.getItem(`quiz_wrongs_${l}`);
+          if (s) wrongDict[l] = JSON.parse(s);
+        });
+      } catch (e) {}
+      updateWrongBadge();
+    }
+
+    function saveWrongs() {
+      try {
+        localStorage.setItem(`quiz_wrongs_${currentLang}`, JSON.stringify(wrongDict[currentLang]));
+      } catch (e) {}
+      updateWrongBadge();
+    }
+
+    function updateWrongBadge() {
+      document.getElementById('wrongCount').textContent = wrongDict[currentLang].length;
+    }
+
+    function switchLanguage(lang) {
+      currentLang = lang;
+      document.getElementById('btnLangKm').classList.toggle('active', lang === 'km');
+      document.getElementById('btnLangEs').classList.toggle('active', lang === 'es');
+      document.getElementById('btnLangEn').classList.toggle('active', lang === 'en');
+
+      const info = DB[lang];
+      document.getElementById('currentLangFlag').textContent = info.flag;
+      document.getElementById('appMainTitle').textContent = info.title;
+
+      const displayWord = document.getElementById('displayWord');
+      displayWord.className = `foreign-word ${info.fontClass}`;
+
+      initQuizPool();
+      updateWrongBadge();
+    }
+
+    function initQuizPool() {
+      const activeBank = DB[currentLang].bank;
+
+      if (currentMode === 'all') {
+        questionPool = [...activeBank];
+      } else if (currentMode === 'verb') {
+        questionPool = activeBank.filter(v => v.type === '동사');
+      } else if (currentMode === 'adj') {
+        questionPool = activeBank.filter(v => v.type === '형용사');
+      } else if (currentMode === 'wrong') {
+        if (wrongDict[currentLang].length === 0) {
+          alert('저장된 오답이 없습니다! 문제를 먼저 풀어보세요.');
+          setMode('all');
+          return;
+        }
+        questionPool = [...wrongDict[currentLang]];
+      }
+
+      questionPool.sort(() => Math.random() - 0.5);
+      currentIndex = 0;
+      updateStats();
+      loadNextQuestion();
+    }
+
+    function loadNextQuestion() {
+      if (currentIndex >= questionPool.length) {
+        if (currentMode === 'wrong') {
+          alert('🎉 오답 복습을 모두 완료했습니다!');
+          setMode('all');
+          return;
+        } else {
+          alert('🏆 축하합니다! 1,000문제를 모두 완주하셨습니다!');
+          currentIndex = 0;
+          questionPool.sort(() => Math.random() - 0.5);
+        }
+      }
+
+      isAnswered = false;
+      const targetWord = questionPool[currentIndex];
+      const activeBank = DB[currentLang].bank;
+
+      const candidates = activeBank.filter(v => v.type === targetWord.type && v.meaning !== targetWord.meaning);
+      const distractors = candidates.sort(() => Math.random() - 0.5).slice(0, 3);
+      const options = [targetWord, ...distractors].sort(() => Math.random() - 0.5);
+
+      currentQuestion = { target: targetWord, options: options };
+      renderCard();
+    }
+
+    function renderCard() {
+      const q = currentQuestion;
+      const info = DB[currentLang];
+
+      document.getElementById('badgeCategory').textContent = `${q.target.type}`;
+      document.getElementById('displayWord').textContent = q.target.word;
+      document.getElementById('displayPron').textContent = `[${q.target.pron}]`;
+
+      document.getElementById('btnMainSpeak').onclick = () => {
+        playSmartSound(q.target.word, q.target.pron);
+      };
+
+      document.getElementById('feedbackBar').style.display = 'none';
+
+      const container = document.getElementById('optionsContainer');
+      container.innerHTML = '';
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('div');
+        btn.className = 'option-btn';
+        btn.id = `optBtn_${idx}`;
+
+        btn.innerHTML = `
+          <div class="option-main-row">
+            <div class="option-left">
+              <span class="option-num">${idx + 1}</span>
+              <span class="option-meaning">${opt.meaning}</span>
+            </div>
+            <span class="option-status-badge" id="optBadge_${idx}"></span>
+          </div>
+
+          <!-- 정답 확인 시 4개 모든 선지의 원어 & 발음 & 개별 재생 버튼 노출 -->
+          <div class="option-revealed-area" id="revArea_${idx}">
+            <div class="revealed-content">
+              <div class="rev-word-group">
+                <span class="rev-foreign ${info.fontClass}">${opt.word}</span>
+                <span class="rev-pron">[${opt.pron}]</span>
+              </div>
+              <button class="btn-opt-tts" id="btnTts_${idx}">
+                🔊 듣기
+              </button>
+            </div>
+          </div>
+        `;
+
+        btn.onclick = () => {
+          if (!isAnswered) checkAnswer(idx, opt);
+        };
+
+        setTimeout(() => {
+          const ttsBtn = document.getElementById(`btnTts_${idx}`);
+          if (ttsBtn) {
+            ttsBtn.onclick = (e) => {
+              e.stopPropagation();
+              playSmartSound(opt.word, opt.pron);
+            };
+          }
+        }, 0);
+
+        container.appendChild(btn);
+      });
+
+      updateStats();
+    }
+
+    function checkAnswer(chosenIndex, chosenOption) {
+      if (isAnswered) return;
+      isAnswered = true;
+
+      solvedCount++;
+      const isCorrect = (chosenOption.meaning === currentQuestion.target.meaning);
+
+      if (isCorrect) {
+        correctCount++;
+        comboCount++;
+        wrongDict[currentLang] = wrongDict[currentLang].filter(w => w.word !== currentQuestion.target.word);
+        saveWrongs();
+      } else {
+        comboCount = 0;
+        if (!wrongDict[currentLang].some(w => w.word === currentQuestion.target.word)) {
+          wrongDict[currentLang].push(currentQuestion.target);
+          saveWrongs();
+        }
+      }
+
+      currentQuestion.options.forEach((opt, idx) => {
+        const btn = document.getElementById(`optBtn_${idx}`);
+        const badge = document.getElementById(`optBadge_${idx}`);
+        const revArea = document.getElementById(`revArea_${idx}`);
+
+        btn.classList.add('locked');
+        revArea.style.display = 'block';
+
+        if (opt.meaning === currentQuestion.target.meaning) {
+          btn.classList.add('correct');
+          badge.textContent = '✓ 정답';
+        } else if (idx === chosenIndex) {
+          btn.classList.add('wrong-chosen');
+          badge.textContent = '✗ 선택한 답';
+        } else {
+          btn.classList.add('distractor');
+        }
+      });
+
+      const feedbackBar = document.getElementById('feedbackBar');
+      const feedbackTitle = document.getElementById('feedbackTitle');
+
+      if (isCorrect) {
+        feedbackTitle.innerHTML = `<span style="color:var(--success);">🎉 정답입니다! (연속 ${comboCount}회 달성)</span>`;
+        playSmartSound(currentQuestion.target.word, currentQuestion.target.pron);
+      } else {
+        feedbackTitle.innerHTML = `<span style="color:var(--danger);">😢 오답입니다! 정답은 [${currentQuestion.target.meaning}]</span>`;
+      }
+
+      feedbackBar.style.display = 'flex';
+      updateStats();
+    }
+
+    function goNext() {
+      currentIndex++;
+      loadNextQuestion();
+    }
+
+    function updateStats() {
+      document.getElementById('statCurrent').textContent = Math.min(currentIndex + 1, questionPool.length);
+      document.getElementById('statTotal').textContent = questionPool.length;
+      document.getElementById('statSolved').textContent = solvedCount;
+      document.getElementById('statCorrect').textContent = correctCount;
+      document.getElementById('statCombo').textContent = comboCount;
+
+      const rate = solvedCount > 0 ? Math.round((correctCount / solvedCount) * 100) : 0;
+      document.getElementById('statRate').textContent = `${rate}%`;
+
+      const progress = questionPool.length > 0 ? (currentIndex / questionPool.length) * 100 : 0;
+      document.getElementById('progressBar').style.width = `${progress}%`;
+    }
+
+    function setMode(mode) {
+      currentMode = mode;
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.mode === mode);
+      });
+      initQuizPool();
+    }
+
+    /* ==========================================================================
+       5. 단어장 검색 모달
+       ========================================================================== */
+    function renderVocabList(query = '') {
+      const container = document.getElementById('vocabList');
+      container.innerHTML = '';
+      const list = DB[currentLang].raw;
+      const fontClass = DB[currentLang].fontClass;
+
+      const filtered = list.filter(item => {
+        const q = query.toLowerCase();
+        return item.word.toLowerCase().includes(q) ||
+               item.pron.toLowerCase().includes(q) ||
+               item.meaning.toLowerCase().includes(q);
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = '<div style="text-align:center; padding:18px; color:var(--text-muted);">검색 결과가 없습니다.</div>';
+        return;
+      }
+
+      filtered.forEach(item => {
+        const row = document.createElement('div');
+        row.className = 'vocab-row';
+        row.innerHTML = `
+          <div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span class="${fontClass}" style="font-size:1.2rem; font-weight:700;">${item.word}</span>
+              <span style="color:var(--gold); font-size:0.9rem; font-weight:600;">[${item.pron}]</span>
+              <span style="font-size:0.72rem; color:#94a3b8; border:1px solid #475569; padding:1px 5px; border-radius:10px;">${item.type}</span>
+            </div>
+            <div style="font-size:0.88rem; color:#f1f5f9; margin-top:2px;">${item.meaning}</div>
+          </div>
+          <button class="btn-opt-tts" onclick="playSmartSound('${item.word}', '${item.pron}')">
+            🔊 듣기
+          </button>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    /* ==========================================================================
+       6. 이벤트 바인딩
+       ========================================================================== */
+    document.addEventListener('DOMContentLoaded', () => {
+      loadSavedWrongs();
+      initQuizPool();
+
+      // 언어 전환
+      document.getElementById('btnLangKm').onclick = () => switchLanguage('km');
+      document.getElementById('btnLangEs').onclick = () => switchLanguage('es');
+      document.getElementById('btnLangEn').onclick = () => switchLanguage('en');
+
+      // 탭
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.onclick = () => setMode(btn.dataset.mode);
+      });
+
+      // 다음 문제
+      document.getElementById('btnNext').onclick = goNext;
+
+      // 발음 모드
+      document.getElementById('btnAudioMode').onclick = () => {
+        if (audioMode === 'native') {
+          audioMode = 'korean';
+          document.getElementById('audioModeText').textContent = '한글 독음';
+          showToast('🗣️ 한글 독음 읽기 모드');
+        } else if (audioMode === 'korean') {
+          audioMode = 'both';
+          document.getElementById('audioModeText').textContent = '연속 듣기';
+          showToast('🔄 원어 + 한글 독음 연속 재생');
+        } else {
+          audioMode = 'native';
+          document.getElementById('audioModeText').textContent = '원어 발음';
+          showToast('🔊 원어 발음 모드');
+        }
+      };
+
+      // 오디오 테스트
+      document.getElementById('btnTestSound').onclick = () => {
+        if (currentLang === 'km') playSmartSound("សួស្តី", "쑤어싸데이 (안녕하세요)");
+        else if (currentLang === 'es') playSmartSound("¡Hola! ¿Cómo estás?", "올라! 꼬모 에스따스? (안녕하세요)");
+        else playSmartSound("Hello! Nice to meet you.", "헬로우! 나이스 투 밋 유. (안녕하세요)");
+      };
+
+      // 사전 모달
+      const modal = document.getElementById('vocabModal');
+      document.getElementById('btnOpenVocab').onclick = () => {
+        document.getElementById('vocabModalTitle').textContent = `📖 ${DB[currentLang].title} 사전`;
+        modal.classList.add('open');
+        renderVocabList();
+      };
+      document.getElementById('btnCloseVocab').onclick = () => modal.classList.remove('open');
+      document.getElementById('vocabSearch').oninput = (e) => renderVocabList(e.target.value);
+
+      // 단축키
+      window.addEventListener('keydown', (e) => {
+        if (modal.classList.contains('open')) return;
+        if (!isAnswered) {
+          if (['1', '2', '3', '4'].includes(e.key)) {
+            const i = parseInt(e.key) - 1;
+            if (currentQuestion && currentQuestion.options[i]) {
+              checkAnswer(i, currentQuestion.options[i]);
+            }
+          }
+        } else {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            goNext();
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
